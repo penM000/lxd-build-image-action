@@ -26,6 +26,16 @@ jobs:
         name: init lxd
         run: |
           sudo lxd init --auto
+      
+      - name: start ubuntu container
+        run: | 
+          lxc launch ubuntu ${{ env.IMAGE_REPOSITORY }}
+
+      - name: copy from repository to container
+        run: |
+          lxc  exec ${{ env.IMAGE_REPOSITORY }} free
+
+
       -
         name: test
         run: |
