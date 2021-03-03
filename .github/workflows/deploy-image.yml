@@ -39,7 +39,21 @@ jobs:
           sudo lxc exec ubuntu -- ls /
           sudo lxc exec ubuntu -- ls /github-action
 
+      - name: remove repository file to container
+        run: |
+          sudo lxc exec ubuntu -- rm -r /github-action
 
+      - name: export image
+        run: |
+          sudo lxc snapshot ubuntu
+          sudo lxc publish ubuntu/snap0 --alias my-image
+          sudo lxc image export my-image image
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: my-image.tar.gz
+      
       -
         name: test
         run: |
