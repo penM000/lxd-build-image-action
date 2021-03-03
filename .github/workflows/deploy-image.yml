@@ -52,9 +52,9 @@ jobs:
             name: default
           EOF
 
-      - name: ping test
+      - name: network test
         run: | 
-          ping -c 5 8.8.8.8
+          curl google.com
 
       - name: start ubuntu container
         run: | 

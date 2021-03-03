@@ -6,7 +6,7 @@ ls -l
 ls -l /dev/
 
 ip a
-ping -c 5 8.8.8.8 
+curl google.com
 echo '
 #!/bin/bash
 sudo apt update
