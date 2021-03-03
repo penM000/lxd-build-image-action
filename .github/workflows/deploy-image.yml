@@ -54,7 +54,7 @@ jobs:
 
       - name: ping test
         run: | 
-          ping -c 8.8.8.8
+          ping -c 5 8.8.8.8
 
       - name: start ubuntu container
         run: | 
