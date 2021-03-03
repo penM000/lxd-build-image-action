@@ -4,11 +4,14 @@ on:
     #tags:
 
 jobs:
-  docker:
+  lxd:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: helloworld
     steps:
+      -
+          name: Checkout
+          uses: actions/checkout@v2
       - # by https://github.com/docker/build-push-action/issues/37#issuecomment-720358308
         name: PrepareReg Names
         run: |
