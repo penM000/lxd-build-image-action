@@ -52,9 +52,6 @@ jobs:
             name: default
           EOF
 
-      - name: network test
-        run: | 
-          curl google.com
 
       - name: start ubuntu container
         run: | 

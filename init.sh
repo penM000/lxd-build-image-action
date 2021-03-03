@@ -1,14 +1,5 @@
 #!/bin/bash
-echo "hoge"
-echo `pwd`
-ls -l
 
-ls -l /dev/
-
-ip a
-curl google.com
-echo '
-#!/bin/bash
 sudo apt update
 sudo apt upgrade -y
 sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y 
@@ -29,4 +20,3 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 docker run --rm hello-world
-'
