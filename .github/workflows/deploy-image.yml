@@ -55,6 +55,9 @@ jobs:
         run: | 
           sudo lxc launch ubuntu ubuntu
           sudo lxc config set ubuntu security.nesting 1
+          sudo lxc network attach lxdbr0 ubuntu eth0 eth0
+          sudo lxc restart ubuntu
+          sleep 5
 
       - name: copy from repository to container
         run: |
