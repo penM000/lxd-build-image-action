@@ -17,15 +17,15 @@ jobs:
           echo IMAGE_TAG=$(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]' | awk '{split($0,a,"/"); print a[3]}') >> $GITHUB_ENV
       -
         name: install lxd
-        run: -
+        run: |
           sudo snap install lxd
       -
         name: init lxd
-        run: -
+        run: |
           sudo lxd init --auto
       -
         name: test
-        run: -
+        run: |
           pwd && ls
 
 
