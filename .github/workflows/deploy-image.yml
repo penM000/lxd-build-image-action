@@ -29,11 +29,13 @@ jobs:
       
       - name: start ubuntu container
         run: | 
-          sudo lxc launch ubuntu ${{ env.IMAGE_REPOSITORY }}
+          sudo lxc launch ubuntu ubuntu
 
       - name: copy from repository to container
         run: |
-          sudo lxc  exec ${{ env.IMAGE_REPOSITORY }} free
+          sudo lxc file push -r `pwd` ubuntu/github-action
+          sudo lxc exec ubuntu - ls /
+          sudo lxc exec ubuntu - ls /github-action
 
 
       -
