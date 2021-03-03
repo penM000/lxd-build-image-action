@@ -5,6 +5,8 @@ ls -l
 
 ls -l /dev/
 
+ip a
+'
 #!/bin/bash
 sudo apt update
 sudo apt upgrade -y
@@ -26,3 +28,4 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 docker run --rm hello-world
+'
