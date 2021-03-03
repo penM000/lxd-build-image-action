@@ -38,12 +38,16 @@ jobs:
           profiles:
           - name: default
             devices:
+              eth0:
+                name: eth0
+                network: lxdbr0
+                type: nic
               root:
                 path: /
                 pool: default
                 type: disk
           EOF
-          sudo lxc profile device add default eth0 nic name=eth0 network=lxdbr0
+
       
       - name: start ubuntu container
         run: | 
