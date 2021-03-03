@@ -52,7 +52,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: my-image.tar.gz
+          path: image.tar.gz
       
       -
         name: test
