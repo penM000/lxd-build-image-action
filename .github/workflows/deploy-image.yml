@@ -25,7 +25,25 @@ jobs:
       -
         name: init lxd
         run: |
-          sudo lxd init --auto
+          cat <<EOF | sudo lxd init --preseed
+          storage_pools:
+          - name: default
+            driver: dir
+          networks:
+          - name: lxdbr0
+            type: bridge
+            config:
+              ipv4.address: auto
+              ipv6.address: none
+          profiles:
+          - name: default
+            devices:
+              root:
+                path: /
+                pool: default
+                type: disk
+          EOF
+          sudo lxc profile device add default eth0 nic name=eth0 network=lxdbr0
       
       - name: start ubuntu container
         run: | 
