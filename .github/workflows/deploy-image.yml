@@ -45,7 +45,7 @@ jobs:
             devices:
               root:
                 path: /
-                pool: lxd
+                pool: default
                 type: disk
             name: default
           EOF
