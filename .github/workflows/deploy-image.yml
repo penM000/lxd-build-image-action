@@ -29,11 +29,11 @@ jobs:
       
       - name: start ubuntu container
         run: | 
-          lxc launch ubuntu ${{ env.IMAGE_REPOSITORY }}
+          sudo lxc launch ubuntu ${{ env.IMAGE_REPOSITORY }}
 
       - name: copy from repository to container
         run: |
-          lxc  exec ${{ env.IMAGE_REPOSITORY }} free
+          sudo lxc  exec ${{ env.IMAGE_REPOSITORY }} free
 
 
       -
