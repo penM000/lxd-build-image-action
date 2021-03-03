@@ -23,14 +23,36 @@ jobs:
         run: |
           sudo snap install lxd
       -
-        name: test
-        run: |
-          ip a
-      -
         name: init lxd
         run: |
-          sudo lxd init --auto
-          
+          cat <<EOF | sudo lxd init --preseed
+          networks:
+          - config:
+              ipv4.address: auto
+              ipv4.nat: "true"
+              ipv6.address: auto
+              ipv6.nat: "true"
+            description: ""
+            name: lxdbr0
+            type: bridge
+            project: default
+          storage_pools:
+          - name: default
+            driver: dir
+          profiles:
+          - config: {}
+            description: Default LXD profile
+            devices:
+              eth0:
+                name: eth0
+                network: lxdbr0
+                type: nic
+              root:
+                path: /
+                pool: lxd
+                type: disk
+            name: default
+          EOF
 
       
       - name: start ubuntu container
