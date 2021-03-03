@@ -2,6 +2,8 @@ name: Publish LXD image
 on:
   push:
     tags:
+      "v*"
+
 
 jobs:
   lxd:
