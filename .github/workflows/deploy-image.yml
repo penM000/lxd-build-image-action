@@ -35,7 +35,7 @@ jobs:
       - name: copy from repository to container
         run: |
           sudo lxc exec ubuntu -- mkdir /github-action
-          sudo lxc file push -r ${{ github.workspace }} ubuntu/github-action
+          sudo lxc file push -r ${{ github.workspace }}/ ubuntu/github-action
           sudo lxc exec ubuntu -- ls /
           sudo lxc exec ubuntu -- ls /github-action
 
@@ -49,6 +49,10 @@ jobs:
         name: test
         run: |
           ls
+      -
+        name: test
+        run: |
+          docker info
 
 
 
