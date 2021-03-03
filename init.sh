@@ -6,7 +6,7 @@ ls -l
 ls -l /dev/
 
 ip a
-'
+echo '
 #!/bin/bash
 sudo apt update
 sudo apt upgrade -y
