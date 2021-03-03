@@ -25,6 +25,8 @@ jobs:
       -
         name: init lxd
         run: |
+          sudo sysctl net.ipv4.ip_forward 
+          sudo sysctl -w net.ipv4.ip_forward=1 
           cat <<EOF | sudo lxd init --preseed
           networks:
           - config:
@@ -50,7 +52,10 @@ jobs:
             name: default
           EOF
 
-      
+      - name: ping test
+        run: | 
+          ping -c 8.8.8.8
+
       - name: start ubuntu container
         run: | 
           sudo lxc launch ubuntu ubuntu
