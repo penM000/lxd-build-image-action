@@ -1,7 +1,7 @@
 name: Publish LXD image
 on:
   push:
-    #tags:
+    tags:
 
 jobs:
   lxd:
@@ -38,6 +38,11 @@ jobs:
           sudo lxc file push -r ${{ github.workspace }}/* ubuntu/github-action
           sudo lxc exec ubuntu -- ls /
           sudo lxc exec ubuntu -- ls /github-action
+      
+      - name: run init.sh in container
+        run: |
+          sudo lxc exec ubuntu -- chmod +x /github-action/init.sh
+          sudo lxc exec ubuntu --  sh -c "cd /github-action && ./init.sh"
 
       - name: remove repository file to container
         run: |
@@ -49,24 +54,27 @@ jobs:
           sudo lxc publish ubuntu/snap0 --alias my-image
           sudo lxc image export my-image image
 
-      - uses: actions/upload-artifact@v2
+ 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: my-artifact
-          path: image.tar.gz
-      
-      -
-        name: test
-        run: |
-          pwd 
-
-      -
-        name: test
-        run: |
-          ls
-      -
-        name: test
-        run: |
-          docker info
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./image.tar.gz
+          asset_name: image.tar.gz
+          asset_content_type: application/gzip
 
 
 
