@@ -30,13 +30,14 @@ jobs:
       - name: start ubuntu container
         run: | 
           sudo lxc launch ubuntu ubuntu
+          sudo lxc config set ubuntu security.nesting 1
 
       - name: copy from repository to container
         run: |
-          sudo lxc exec ubuntu - mkdir /github-action
+          sudo lxc exec ubuntu -- mkdir /github-action
           sudo lxc file push -r ${{ github.workspace }} ubuntu/github-action
-          sudo lxc exec ubuntu - ls /
-          sudo lxc exec ubuntu - ls /github-action
+          sudo lxc exec ubuntu -- ls /
+          sudo lxc exec ubuntu -- ls /github-action
 
 
       -
