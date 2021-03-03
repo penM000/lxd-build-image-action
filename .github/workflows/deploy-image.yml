@@ -3,8 +3,6 @@ on:
   push:
     tags:
       "v*"
-
-
 jobs:
   lxd:
     runs-on: ubuntu-latest
