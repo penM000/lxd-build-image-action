@@ -1,9 +1,7 @@
-name: Publish Docker image
+name: Publish LXD image
 on:
-  schedule:
-    - cron: '0 10 * * *'
   push:
-    tags:
+    #tags:
 
 jobs:
   docker:
@@ -18,38 +16,18 @@ jobs:
           echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
           echo IMAGE_TAG=$(echo ${{ github.ref }} | tr '[:upper:]' '[:lower:]' | awk '{split($0,a,"/"); print a[3]}') >> $GITHUB_ENV
       -
-        name: Checkout
-        uses: actions/checkout@v2
+        name: install lxd
+        run: -
+          sudo snap install lxd
       -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
+        name: init lxd
+        run: -
+          sudo lxd init --auto
       -
-        name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
+        name: test
+        run: -
+          pwd && ls
 
-      -
-        name: Available platforms
-        run: echo ${{ steps.buildx.outputs.platforms }}
-
-      - 
-        name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
-
-      - 
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          platforms: linux/s390x,linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le
-          push: true
-          tags: ghcr.io/${{ env.IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
 
 
